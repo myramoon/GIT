@@ -4,27 +4,42 @@
 IS_FULL_TIME=2
 IS_PART_TIME=1
 EMPLOYEE_PER_HOUR_RATE=20
- 
+MAX_WORKING_DAYS=20
+
 #VARIABLES
 workHour=0
 salary=0
-attendance_Status=$((RANDOM%3))  #Check attendance status using RANDOM function
+totalSalary=0
  
-case $attendance_Status in
+for (( day=1; day<=$MAX_WORKING_DAYS; day++ ))
+do
+	attendance_Status=$((RANDOM%3))  #Check attendance status using RANDOM function	
+		case $attendance_Status in
 	
-   $IS_PART_TIME)
-      workHour=8 ;;
+   			$IS_PART_TIME)
+      				workHour=8 ;;
  
-   $IS_FULL_TIME)
-      workHour=16 ;;
+   			$IS_FULL_TIME)
+      				workHour=16 ;;
  
-   *)
-      workHour=0 ;;
+   			*)
+      				workHour=0 ;;
  
-esac
+		esac
  
- echo "Working hours of employee : " $workHour 				#Print work hours for the day and resulting salary.
-echo "salary : " $(( workHour * EMPLOYEE_PER_HOUR_RATE ))
+	salary=$((workHour * EMPLOYEE_PER_HOUR_RATE))
+	totalSalary=$((totalSalary + salary))
+ 
+done
+ 
+echo "Salary of the employee for the current month : " $totalSalary
+ 
+ 
+ 
+	 
+	 
+	
+
  
 
 
