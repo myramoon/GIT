@@ -13,29 +13,38 @@ totalWorkHours=0
 totalWorkingDays=0
 salary=0
 totalSalary=0
+
+#function to get work hours on daily basis
+ 
+function getPerDayWorkHours() {
+ 
+	case $1 in
+ 
+		$IS_PART_TIME)
+	                workHour=8 ;;
+ 
+               	$IS_FULL_TIME)
+                       	workHour=16 ;;
+ 
+                *)
+                        workHour=0 ;;
+ 
+        esac
+echo $workHour
+ 
+}
+#DRIVER CODE
  
 while [[ $totalWorkHours -lt $MAX_WORKING_HOURS && $totalWorkingDays -lt $MAX_WORKING_DAYS ]]
 do
-	attendance_Status=$((RANDOM%3))  #Check attendance status using RANDOM function	
-		case $attendance_Status in
-	
-   			$IS_PART_TIME)
-      				workHour=8 ;;
- 
-   			$IS_FULL_TIME)
-      				workHour=16 ;;
- 
-   			*)
-      				workHour=0 ;;
- 
-		esac
- 
-	totalWorkHours=$(( totalWorkHours + workHour )) #update total working hours
-	totalWorkingDays=$((totalWorkingDays + 1))      #increment the number of days logged 
+	totalWorkingDays=$((totalWorkingDays + 1))        #increment the number of days logged
+	workHour="$( getPerDayWorkHours $((RANDOM%3)) )"  #Check attendance status using RANDOM function and call the function that calculates work hours	
+	totalWorkHours=$(( totalWorkHours + workHour ))   #add current day's work hours to total workhours 
 done
  
-totalSalary=$((totalWorkHours * EMPLOYEE_PER_HOUR_RATE ))  	    #compute total salary 
-echo "Salary of the employee for the current month : " $totalSalary #print total salary for the month
+totalSalary=$((totalWorkHours * EMPLOYEE_PER_HOUR_RATE )) #compute total salary
+echo "Salary of the employee for the current month : " $totalSalary    #print total salary for the month
+ 
  
  
  
