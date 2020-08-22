@@ -1,17 +1,20 @@
-#!/usr/local/bin/bash
+#!/usr/local/bin/bash -x
 
 #CONSTANTS
 IS_FULL_TIME=2
 IS_PART_TIME=1
 EMPLOYEE_PER_HOUR_RATE=20
+MAX_WORKING_HOURS=100
 MAX_WORKING_DAYS=20
-
+ 
 #VARIABLES
 workHour=0
+totalWorkHours=0
+totalWorkingDays=0
 salary=0
 totalSalary=0
  
-for (( day=1; day<=$MAX_WORKING_DAYS; day++ ))
+while [[ $totalWorkHours -lt $MAX_WORKING_HOURS && $totalWorkingDays -lt $MAX_WORKING_DAYS ]]
 do
 	attendance_Status=$((RANDOM%3))  #Check attendance status using RANDOM function	
 		case $attendance_Status in
@@ -27,12 +30,13 @@ do
  
 		esac
  
-	salary=$((workHour * EMPLOYEE_PER_HOUR_RATE))
-	totalSalary=$((totalSalary + salary))
- 
+	totalWorkHours=$(( totalWorkHours + workHour )) #update total working hours
+	totalWorkingDays=$((totalWorkingDays + 1))      #increment the number of days logged 
 done
  
-echo "Salary of the employee for the current month : " $totalSalary
+totalSalary=$((totalWorkHours * EMPLOYEE_PER_HOUR_RATE ))  	    #compute total salary 
+echo "Salary of the employee for the current month : " $totalSalary #print total salary for the month
+ 
  
  
  
